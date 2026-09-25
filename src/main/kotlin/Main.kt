@@ -1,7 +1,18 @@
 package org.example
 
 import org.example.dresseur.Entraineur
+import org.example.monstre.EspeceMonstre
 
+
+var joueur = Entraineur(1, "Sacha", 100)
+var rival = Entraineur(2,"Regis",200)
+var especeSpringLeaf = EspeceMonstre(1, "Springleaf", "Graine", 9, 11, 10, 12, 14, 34, 6.5, 9.0, 8.0, 7.0, 10.0, 60.0)
+
+
+fun main() {
+    println(especeSpringLeaf.afficheArt())
+    println(especeSpringLeaf.afficheArt(false))
+}
 /**
  * Change la couleur du message donné selon le nom de la couleur spécifié.
  * Cette fonction utilise les codes d'échappement ANSI pour appliquer une couleur à la sortie console. Si un nom de couleur
@@ -24,15 +35,4 @@ fun changeCouleur(message: String, couleur:String=""): String {
         else -> "" // pas de couleur si non reconnu
     }
     return "$codeCouleur$message$reset"
-}
-var joueur = Entraineur(1, "Sacha", 100)
-var rival = Entraineur(2,"Regis",200)
-
-
-
-fun main() {
-    joueur.afficheDetail()
-    rival.afficheDetail()
-    joueur.argents+=50
-    joueur.afficheDetail()
 }

@@ -28,16 +28,16 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         set(value) {
             field = value
             var estNiveau1: Boolean
-//            if (this.niveau == 1) {
-//                estNiveau1 = true
-//            }
-//            else {
-//                estNiveau1 = false
-//            }
+            if (this.niveau == 1) {
+                estNiveau1 = true
+            }
+            else {
+                estNiveau1 = false
+            }
 
             while (field >= this.palierExp(this.niveau)) {
                 this.levelUp()
-                if (this.niveau > 1) {
+                if (estNiveau1 == false) {
                     println("Le monster ${this.nom} est maintenant niveau ${this.niveau}")
                 }
             }
@@ -99,7 +99,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
     modifié.
      */
     fun renommer() {
-        print("Renommer [${this.nom}] ?")
+        println("Renommer [${this.nom}] ?")
         var saisie = readln()
         if (saisie.isNotEmpty()) {
             this.nom = saisie

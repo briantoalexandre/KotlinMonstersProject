@@ -93,6 +93,18 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         println("[${this.nom}] inflige ${pvAvant - pvApres} dégâts à [${cible.nom}]")
     }
 
+    fun afficherDetail() {
+        val artLines: List<String> = this.especeMonstre.afficheArt().split("\n")
+        var details: List<Any> = listOf(this.nom, this.niveau, this.pv, this.pvMax, this.attaque, this.defense, this.vitesse, this.attaqueSpe, this.defenseSpe)
+        val maxArtWidth: Int = artLines.toList().map { it.length } . max()
+        var maxLines: Int = listOf(artLines.size, details.size).max()
+        for (i in 0..maxLines-1) {
+
+            println(artLines[i].padEnd(50, ' ')+ if (i < details.size-1) details[i] else "")
+
+        }
+    }
+
     init {
         this.exp = expInit
     }

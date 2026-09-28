@@ -38,7 +38,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
             while (field >= this.palierExp(this.niveau)) {
                 this.levelUp()
                 if (this.niveau > 1) {
-                    print("Le monster ${this.nom} est maintenant niveau ${this.niveau}")
+                    println("Le monster ${this.nom} est maintenant niveau ${this.niveau}")
                 }
             }
         }
@@ -73,8 +73,25 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         this.pvMax += (especeMonstre.modPv * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -5 else 5
         this.pv = this.pvMax
     }
-
-    //TODO methode attaquer()
+    /**
+    * Attaque un autre [IndividuMonstre] et inflige des dégâts.
+    *
+    * Les dégâts sont calculés de manière très simple pour le moment :
+    * `dégâts = attaque - (défense / 2)` (minimum 1 dégât).
+    *
+    * @param cible Monstre cible de l'attaque.
+    */
+    fun attaquer(cible: IndividuMonstre) {
+        var degatBrut: Int = this.attaque
+        var degatTotal = degatBrut - (this.defense / 2)
+        if (degatTotal < 1) {
+            degatTotal = 1
+        }
+        var pvAvant = cible.pv
+        cible.pv -= degatTotal
+        var pvApres = cible.pv
+        println("[${this.nom}] inflige ${pvAvant - pvApres} dégâts à [${cible.nom}]")
+    }
 
     init {
         this.exp = expInit

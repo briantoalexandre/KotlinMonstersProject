@@ -49,5 +49,9 @@ var m2 = IndividuMonstre(1, "flamkip", especeSpringleaf, null, 1500.0)
 var m3 = IndividuMonstre(1, "...", especeSpringleaf, null, 1500.0)
 
 fun main() {
+    println(m2.pv)
+    m1.attaquer(m2)
+    println(m2.pv)
+
 
 }

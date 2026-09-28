@@ -74,7 +74,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         this.pv = this.pvMax
     }
     /**
-    * Attaque un autre [IndividuMonstre] et inflige des dégâts.
+    * Attaque un autre [IndividuMonstre] et inflige des dégâts. Fait par Alexandre
     *
     * Les dégâts sont calculés de manière très simple pour le moment :
     * `dégâts = attaque - (défense / 2)` (minimum 1 dégât).
@@ -93,15 +93,54 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         println("[${this.nom}] inflige ${pvAvant - pvApres} dégâts à [${cible.nom}]")
     }
 
+    /**
+     * Demande au joueur de renommer le monstre.
+     * Si l'utilisateur entre un texte vide, le nom n'est pas
+    modifié.
+     */
+    fun renommer() {
+        print("Renommer [${this.nom}] ?")
+        var saisie = readln()
+        if (saisie.isNotEmpty()) {
+            this.nom = saisie
+        }
+    }
+
+    /**
+     *
+     */
     fun afficherDetail() {
-        val artLines: List<String> = this.especeMonstre.afficheArt().split("\n")
-        var details: List<Any> = listOf(this.nom, this.niveau, this.pv, this.pvMax, this.attaque, this.defense, this.vitesse, this.attaqueSpe, this.defenseSpe)
+        val art: String = this.especeMonstre.afficheArt()
+        var artLines: List<String> = art.lines()
+        var temp: Map<String, Any> = mapOf("" to "", "nom" to this.nom, "niveau" to this.niveau, "PV" to "${this.pv}/${this.pvMax}", "attaque" to this.attaque, "defense" to this.defense, "vitesse" to this.vitesse, "attaqueSpe" to this.attaqueSpe, "defenseSpe" to this.defenseSpe)
+        var details: MutableList<String> = mutableListOf()
+
+        temp.forEach { K, V ->
+            details.add(if (K.isNotEmpty()) "$K = $V" else "")
+        }
+
+
+
         val maxArtWidth: Int = artLines.toList().map { it.length } . max()
         var maxLines: Int = listOf(artLines.size, details.size).max()
+
+        var artLine: String
+        var detailLine: String
         for (i in 0..maxLines-1) {
-
-            println(artLines[i].padEnd(50, ' ')+ if (i < details.size-1) details[i] else "")
-
+            if (i < artLines.size) {
+                artLine = artLines[i]
+            } else {
+                artLine = ""
+            }
+            if (i < details.size) {
+                detailLine = details[i].toString()
+            } else {
+                detailLine = ""
+            }
+            println(artLine.padEnd(maxArtWidth + 4) + detailLine)
+            if (i < maxLines) {
+                continue
+            }
         }
     }
 

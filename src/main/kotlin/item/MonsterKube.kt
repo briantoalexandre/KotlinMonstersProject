@@ -12,7 +12,6 @@ class MonsterKube(id: Int, nom: String, description: String, var chanceCapture: 
         println("Vous lancez la poké- le Monster Kube!")
         if (cible.entraineur != null) {
             println("Le monstre ne peut être capturé.")
-            return false
         }
         var rationVie = cible.pv / cible.pvMax
         var chanceEffective = chanceCapture * (1.5 - rationVie)
@@ -27,12 +26,10 @@ class MonsterKube(id: Int, nom: String, description: String, var chanceCapture: 
                 joueur.equipeMonstre.add(cible)
             }
             cible.entraineur = joueur
-            return true
         } else {
             println("Presque ! Le Kube n'a pas pu capturer le monstre!")
-            return false
         }
-
+        return true
     }
 
 

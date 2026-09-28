@@ -48,6 +48,6 @@ var pokeball = MonsterKube(1, "Pokeball", "oui", 50.0)
 
 
 fun main() {
-    pokeball.utiliser(m1)
+
 
 }

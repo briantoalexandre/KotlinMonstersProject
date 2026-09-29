@@ -1,6 +1,8 @@
 package org.example.monde
 
 import org.example.monstre.EspeceMonstre
+import org.example.monstre.IndividuMonstre
+import kotlin.random.Random
 
 
 /**
@@ -17,6 +19,12 @@ import org.example.monstre.EspeceMonstre
 
 class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: MutableList<EspeceMonstre>, var zoneSuivante: Zone?, var zonePrecedante: Zone?) {
 
-    //TODO faire la méthode genereMonstre()
+    fun genererMonstre() {
+        var expAleatoire = this.expZone * when (Random.nextInt(0, 3)) {1 -> 0.8; 2 -> 1.0; else -> 1.2}
+        var especeMonstre: EspeceMonstre = especeMonstres[Random.nextInt(0,especeMonstres.size)]
+        var individuMonstre = IndividuMonstre(1, especeMonstre.nom, especeMonstre, null, expAleatoire)
+
+    }
+
     //TODO faire la méthode rencontreMonstre()
 }

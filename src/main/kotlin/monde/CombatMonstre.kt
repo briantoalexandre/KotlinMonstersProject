@@ -102,4 +102,55 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
 
     }
 
+    fun afficheCombat() {
+        println("== Début Round: $round ==")
+        println("Niveau : ${monstreSauvage.niveau}")
+        println("PV : ${monstreSauvage.pv}/${monstreSauvage.pvMax}")
+        println(monstreSauvage.especeMonstre.afficheArt())
+        println(monstreJoueur.especeMonstre.afficheArt(false))
+        println("Niveau : ${monstreJoueur.niveau}")
+        println("PV: ${monstreJoueur.pv}/${monstreJoueur.pvMax}")
+    }
+
+    fun jouer() {
+        val joueurPlusRapide = (monstreJoueur.vitesse >= monstreSauvage.vitesse)
+        afficheCombat()
+        var continuer: Boolean
+        if (joueurPlusRapide) {
+            continuer = actionJoueur()
+            if (continuer == false) {
+                return
+            }
+            actionAdversaire()
+        } else {
+            actionAdversaire()
+            if (gameOver() == false) {
+                continuer = actionJoueur()
+                if (continuer == false) {
+                    return
+                }
+            }
+        }
+
+        /**
+         * Lance le combat et gère les rounds jusqu'à la victoire ou la défaite.
+         *
+         * Affiche un message de fin si le joueur perd et restaure les PV
+         * de tous ses monstres.
+         */
+        fun lanceCombat() {
+            while (!gameOver() && !joueurGagne()) {
+                this.jouer()
+                println("======== Fin du Round : $round ========")
+                round++
+            }
+            if (gameOver()) {
+                joueur.equipeMonstre.forEach { it.pv = it.pvMax }
+                println("Game Over !")
+            }
+        }
+
+
+    }
+
 }

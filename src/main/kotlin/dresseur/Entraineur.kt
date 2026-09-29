@@ -13,7 +13,9 @@ import org.example.pokeball
  * @property id L'identifiant unique de l'entraîneur.
  * @property nom Le nom de l'entraîneur.
  * @property argents La quantité d'argent en possession de l'entraîneur.
-
+ * @property equipeMonstre L'équipe de monstres de l'entraineur
+ * @property boiteMonstre
+ * @property sacAItems
  */
 class Entraineur(
     var id: Int,
@@ -21,7 +23,7 @@ class Entraineur(
     var argents:Int,
     var equipeMonstre: MutableList<IndividuMonstre> = mutableListOf(),
     var boiteMonstre: MutableList<IndividuMonstre> = mutableListOf(),
-    var sacAItems: MutableList<Item> = mutableListOf(pokeball)
+    var sacAItems: MutableList<Item> = mutableListOf()
 ) {
     /**
      * Affiche les détails de l'entraîneur, y compris son nom et la quantité d'argent en sa possession.

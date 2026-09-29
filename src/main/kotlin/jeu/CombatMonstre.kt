@@ -1,4 +1,4 @@
-package org.example.monde
+package org.example.jeu
 
 import org.example.item.Utilisable
 import org.example.joueur
@@ -64,7 +64,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
                 }
                 var indexChoix = readln().toIntOrNull()
                 if (indexChoix != null) {
-                    var objetChoisi = joueur.sacAItems[indexChoix % joueur.sacAItems.size]
+                    var objetChoisi = joueur.sacAItems.getOrElse(indexChoix, { null })
                     if (objetChoisi is Utilisable) {
                         var captureReussie = objetChoisi.utiliser(monstreSauvage)
                         if (captureReussie) {
@@ -84,7 +84,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
 
                 var indexChoix = readln().toIntOrNull()
                 if (indexChoix != null) {
-                    var choixMonstre = joueur.equipeMonstre[indexChoix % joueur.equipeMonstre.size]
+                    var choixMonstre = joueur.equipeMonstre.getOrElse(indexChoix, { joueur.equipeMonstre.first() })
                     if (choixMonstre.pv <= 0) {
                         println("Impossible ! Ce monstre est Ko")
                     } else {

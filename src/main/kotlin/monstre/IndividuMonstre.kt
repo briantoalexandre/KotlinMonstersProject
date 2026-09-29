@@ -119,8 +119,6 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
             details.add(if (K.isNotEmpty()) "$K = $V" else "")
         }
 
-
-
         val maxArtWidth: Int = artLines.toList().map { it.length } . max()
         var maxLines: Int = listOf(artLines.size, details.size).max()
 
@@ -133,7 +131,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
                 artLine = ""
             }
             if (i < details.size) {
-                detailLine = details[i].toString()
+                detailLine = details[i]
             } else {
                 detailLine = ""
             }

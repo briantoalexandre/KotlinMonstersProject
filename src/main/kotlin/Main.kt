@@ -2,6 +2,8 @@ package org.example
 
 import org.example.dresseur.Entraineur
 import org.example.item.MonsterKube
+import org.example.jeu.Partie
+import org.example.monde.Zone
 import org.example.monstre.EspeceMonstre
 import org.example.monstre.IndividuMonstre
 
@@ -46,8 +48,9 @@ var m3 = IndividuMonstre(1, "...", especeSpringleaf, null, 0.0)
 
 var pokeball = MonsterKube(1, "Pokeball", "oui", 50.0)
 
+var route1 = Zone(1, "", 50, mutableListOf(), null, null)
+var partie1 = Partie(1, joueur, route1)
 
 fun main() {
-
 
 }

@@ -1,5 +1,6 @@
 package org.example.monde
 
+import org.example.jeu.CombatMonstre
 import org.example.joueur
 import org.example.monstre.EspeceMonstre
 import org.example.monstre.IndividuMonstre
@@ -22,7 +23,7 @@ class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: M
 
     fun genererMonstre(): IndividuMonstre {
         var expAleatoire = this.expZone * when (Random.nextInt(0, 3)) {1 -> 0.8; 2 -> 1.0; else -> 1.2}
-        var especeMonstre: EspeceMonstre = especeMonstres[Random.nextInt(0,especeMonstres.size)]
+        var especeMonstre: EspeceMonstre = especeMonstres.random() // especeMonstres[Random.nextInt(0,especeMonstres.size)]
         var individuMonstre = IndividuMonstre(1, especeMonstre.nom, especeMonstre, null, expAleatoire)
         return individuMonstre
 
@@ -32,5 +33,7 @@ class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: M
         val monstreSauvage = this.genererMonstre()
         val premierMonstre = joueur.equipeMonstre.let { it.getOrElse(it.map { monstre -> monstre.pv > 0 }.indexOf(true), { _ -> it.last() }) }
         val combatMonstre = CombatMonstre(premierMonstre, monstreSauvage)
+        //TODO A verifier
+        //combatMonstre.lanceCombat()
     }
 }

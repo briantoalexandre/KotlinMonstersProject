@@ -107,7 +107,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
     }
 
     /**
-     *
+     * Affiche le sprite du monstre et ses stats
      */
     fun afficherDetail() {
         val art: String = this.especeMonstre.afficheArt()

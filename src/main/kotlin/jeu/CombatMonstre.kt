@@ -31,6 +31,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
         return (joueur.equipeMonstre.none { it.pv > 0})
     }
 
+    //TODO Commentaires
     fun joueurGagne(): Boolean {
         if (this.monstreSauvage.pv <= 0) {
             println("[${joueur.nom}] a gagné !")
@@ -45,12 +46,15 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
             return false
         }
     }
+
+    //TODO Commentaires
     fun actionAdversaire() {
         if (monstreSauvage.pv > 0) {
             monstreSauvage.attaquer(monstreJoueur)
         }
     }
 
+    //TODO Commentaires
     fun actionJoueur(): Boolean {
         if (gameOver()) {
             return false
@@ -60,7 +64,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
             1 -> monstreJoueur.attaquer(monstreSauvage)
             2 -> {
                 joueur.sacAItems.forEachIndexed { index, item ->
-                    println("$item ($index)")
+                    println("${item.nom} ($index)")
                 }
                 var indexChoix = readln().toIntOrNull()
                 if (indexChoix != null) {
@@ -78,13 +82,18 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
                 }
             }
             3 -> {
-                joueur.equipeMonstre.forEachIndexed { index, monstre ->
-                    if (monstre.pv > 0) println("$monstre ($index)")
-                }
+                if (joueur.equipeMonstre.size > 2) {
+                    var dernierMonstre: Int = joueur.equipeMonstre.lastIndex
+                    joueur.equipeMonstre.forEachIndexed { index, monstre ->
+                        if (monstre.pv > 0) {
+                            println("${monstre.nom} ($index)")
+                            dernierMonstre = index
+                        }
+                    }
 
-                var indexChoix = readln().toIntOrNull()
-                if (indexChoix != null) {
-                    var choixMonstre = joueur.equipeMonstre.getOrElse(indexChoix, { joueur.equipeMonstre.first() })
+                    var indexChoix = readln().toIntOrNull() ?: 0
+                    var choixMonstre =
+                        joueur.equipeMonstre.getOrElse(indexChoix, { joueur.equipeMonstre.get(dernierMonstre) })
                     if (choixMonstre.pv <= 0) {
                         println("Impossible ! Ce monstre est Ko")
                     } else {
@@ -93,7 +102,8 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
                     }
 
                 } else {
-                    println("monstre pas trouvé")
+                    println("Pas assez de monstres")
+                    //return false
                 }
             }
             else -> {}
@@ -102,6 +112,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
 
     }
 
+    //TODO Commentaires
     fun afficheCombat() {
         println("== Début Round: $round ==")
         println("Niveau : ${monstreSauvage.niveau}")
@@ -112,6 +123,7 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
         println("PV: ${monstreJoueur.pv}/${monstreJoueur.pvMax}")
     }
 
+    //TODO Commentaires
     fun jouer() {
         val joueurPlusRapide = (monstreJoueur.vitesse >= monstreSauvage.vitesse)
         afficheCombat()

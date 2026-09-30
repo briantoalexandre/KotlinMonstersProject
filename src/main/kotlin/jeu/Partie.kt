@@ -9,7 +9,7 @@ import org.example.monstre.IndividuMonstre
 
 class Partie(var id: Int, var joueur: Entraineur, var zone: Zone) {
     /**
-     * Choisie
+     * Choisie un Pok- monstre et l'ajoute dans l'equipe du [joueur]
      */
     fun choixStarter() {
         val monstre1 = IndividuMonstre(1, especeSpringleaf.nom, especeSpringleaf, null, 0.0)
@@ -33,17 +33,53 @@ class Partie(var id: Int, var joueur: Entraineur, var zone: Zone) {
      * Permet de modifier l'odre de l'équipe du joueur
      */
     fun modifierOrdreEquipe() {
-        if (joueur.boiteMonstre.size > 1) {
-            joueur.boiteMonstre.forEachIndexed { index, monstre ->
+        if (joueur.equipeMonstre.size > 1) {
+            joueur.equipeMonstre.forEachIndexed { index, monstre ->
                 println("${monstre.nom} ($index)")
             }
 
             println("Pok- Monstre à échanger")
-            var choix1 = readln().toIntOrNull() ?: 0
+            var choix1 = readln().toIntOrNull()?.coerceIn(0, joueur.equipeMonstre.size-1) ?: 0
             println("avec")
-            var choix2 = readln().toIntOrNull()?.coerceAtLeast(1) ?: 1
+            var choix2: Int
+            do {
+                choix2 = readln().toIntOrNull()?.coerceIn(0, joueur.equipeMonstre.size-1) ?: 1
+            } while (choix1 == choix2)
+            joueur.equipeMonstre.let {
+                // https://stackoverflow.com/questions/69936845/how-to-swap-elements-in-mutablelist-in-kotlin
+                val tmp = it[choix1]
+                it[choix1] = it[choix2]
+                it[choix2] = tmp
+            }
+        }
+    }
 
-            joueur.boiteMonstre.let { it1 -> with(it1.get(choix1)) { it1.remove(this@with) } }
+    //TODO Commentaires
+    fun examineEquipe() {
+        if (joueur.equipeMonstre.size > 0) {
+            joueur.equipeMonstre.forEachIndexed { index, monstre ->
+                println("${monstre.nom} ($index)")
+            }
+            var choix1 = readln().toIntOrNull()?.coerceIn(0, joueur.equipeMonstre.size-1) ?: 0
+            var monstreAExaminer = joueur.equipeMonstre.get(choix1)
+            monstreAExaminer.afficherDetail()
+        } else {
+            println("Pas de monstre dans l'equipe")
+        }
+    }
+
+    //TODO Commentaires
+    fun jouer() {
+        when (readln().toIntOrNull()?.coerceIn(1, 4)) {
+            1 -> this.zone.genererMonstre()
+            2 -> this.examineEquipe()
+            3 -> {
+                if (this.zone.zoneSuivante != null) { this.zone = zone.zoneSuivante!! }
+            }
+            3 -> {
+                if (this.zone.zonePrecedante != null) { this.zone = zone.zonePrecedante!! }
+            }
+            else -> this.jouer()
         }
     }
 }

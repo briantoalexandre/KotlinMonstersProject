@@ -2,6 +2,7 @@ package org.example
 
 import org.example.dresseur.Entraineur
 import org.example.item.MonsterKube
+import org.example.jeu.CombatMonstre
 import org.example.jeu.Partie
 import org.example.monde.Zone
 import org.example.monstre.EspeceMonstre
@@ -42,15 +43,24 @@ var especeLaoumi = EspeceMonstre(8, "Laoumi", "Animal", 11, 10, 9, 8, 11, 23, 11
 var especeBugsyface = EspeceMonstre(10, "Bugsyface", "Insecte", 10, 13, 8, 7, 13, 21, 7.0, 11.0, 6.5, 8.0, 11.5, 45.0, )
 var especeGalum = EspeceMonstre(13, "Galum", "Minéral", 12, 15, 6, 8, 12, 13, 9.0, 13.0, 4.0, 6.5, 10.5, 55.0, )
 
-var m1 = IndividuMonstre(1, "nomDeMonstreOriginal1", especeSpringleaf, null, 0.0)
-var m2 = IndividuMonstre(1, "flamkip", especeSpringleaf, null, 0.0)
-var m3 = IndividuMonstre(1, "...", especeSpringleaf, null, 0.0)
+var m1 = IndividuMonstre(1, "111", especeSpringleaf, null, 0.0)
+var m2 = IndividuMonstre(1, "flamkip", especeFlamkip, null, 0.0)
+var m3 = IndividuMonstre(1, "...", especeGalum, null, 0.0)
 
 var pokeball = MonsterKube(1, "Pokeball", "oui", 50.0)
 
 var route1 = Zone(1, "", 50, mutableListOf(), null, null)
 var partie1 = Partie(1, joueur, route1)
 
+
+
 fun main() {
 
+    joueur.equipeMonstre.add(m1)
+    joueur.equipeMonstre.add(m2)
+
+    //partie1.examineEquipe()
+
+    //CombatMonstre(joueur.equipeMonstre.get(0), m3).lanceCombat()
+    //println(joueur.equipeMonstre)
 }

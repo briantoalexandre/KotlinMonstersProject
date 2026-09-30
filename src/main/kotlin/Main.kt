@@ -96,3 +96,4 @@ fun main() {
     partie.jouer()
 
 }
+//https://gist.github.com/lunatic-fox/1b7161ef47d96a3d0d73ce8d5181a279

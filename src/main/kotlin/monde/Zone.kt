@@ -19,8 +19,11 @@ import kotlin.random.Random
  * @property zonePrecedante Zone accessible avant la zone actuelle, si elle existe.
  */
 
-class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: MutableList<EspeceMonstre>, var zoneSuivante: Zone?, var zonePrecedante: Zone?) {
-
+class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: MutableList<EspeceMonstre>, var zoneSuivante: Zone? = null, var zonePrecedante: Zone? = null) {
+    /**
+     * Genere un monstre avec de l'exp aléatoire
+     * @return [IndividuMonstre]
+     */
     fun genererMonstre(): IndividuMonstre {
         var expAleatoire = this.expZone * when (Random.nextInt(0, 3)) {1 -> 0.8; 2 -> 1.0; else -> 1.2}
         var especeMonstre: EspeceMonstre = especeMonstres.random() // especeMonstres[Random.nextInt(0,especeMonstres.size)]
@@ -29,11 +32,13 @@ class Zone(var id : Int,var nom: String, var expZone: Int, var especeMonstres: M
 
     }
 
+    /**
+     * Permet la recontre entre un [IndividuMonstre] au hasard et
+     * le joueur (le premier monstre qui à des pv)
+     */
     fun recontreMonstre() {
         val monstreSauvage = this.genererMonstre()
         val premierMonstre = joueur.equipeMonstre.let { it.getOrElse(it.map { monstre -> monstre.pv > 0 }.indexOf(true), { _ -> it.last() }) }
         val combatMonstre = CombatMonstre(premierMonstre, monstreSauvage)
-        //TODO A verifier
-        //combatMonstre.lanceCombat()
     }
 }

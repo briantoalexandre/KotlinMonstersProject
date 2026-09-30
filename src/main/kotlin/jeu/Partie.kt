@@ -54,7 +54,10 @@ class Partie(var id: Int, var joueur: Entraineur, var zone: Zone) {
         }
     }
 
-    //TODO Commentaires
+    /**
+     * Permet d'examiner l'equipe, montre les [Entraineur.equipeMonstre] du joueur
+     * puis offre le choix d'afficher les stats d'un [IndividuMonstre]
+     */
     fun examineEquipe() {
         if (joueur.equipeMonstre.size > 0) {
             joueur.equipeMonstre.forEachIndexed { index, monstre ->
@@ -68,7 +71,9 @@ class Partie(var id: Int, var joueur: Entraineur, var zone: Zone) {
         }
     }
 
-    //TODO Commentaires
+    /**
+     * Offre un choix au joueur
+     */
     fun jouer() {
         when (readln().toIntOrNull()?.coerceIn(1, 4)) {
             1 -> this.zone.genererMonstre()
@@ -76,7 +81,7 @@ class Partie(var id: Int, var joueur: Entraineur, var zone: Zone) {
             3 -> {
                 if (this.zone.zoneSuivante != null) { this.zone = zone.zoneSuivante!! }
             }
-            3 -> {
+            4 -> {
                 if (this.zone.zonePrecedante != null) { this.zone = zone.zonePrecedante!! }
             }
             else -> this.jouer()

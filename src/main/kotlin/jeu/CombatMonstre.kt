@@ -31,11 +31,15 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
         return (joueur.equipeMonstre.none { it.pv > 0})
     }
 
-    //TODO Commentaires
+    /**
+     * Verifie si le joueur à mis KO le monstre sauvage ou si le joueur la capturer
+     *
+     * @return renvoie 'true' si le joueur gagne, 'false' sinon.
+     */
     fun joueurGagne(): Boolean {
         if (this.monstreSauvage.pv <= 0) {
             println("[${joueur.nom}] a gagné !")
-            var gainExp = this.monstreSauvage.exp * 0.20
+            val gainExp = this.monstreSauvage.exp * 0.20
             monstreJoueur.exp += gainExp
             println("[${monstreJoueur.nom}] gagne [${gainExp}] exp")
             return true
@@ -47,14 +51,18 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
         }
     }
 
-    //TODO Commentaires
+    /**
+     *  fait attaquer le [monstreJoueur] si le [monstreSauvage] à des [IndividuMonstre.pv]?
+     */
     fun actionAdversaire() {
         if (monstreSauvage.pv > 0) {
             monstreSauvage.attaquer(monstreJoueur)
         }
     }
 
-    //TODO Commentaires
+    /**
+     * Offre des choix d'action au joueur.
+     */
     fun actionJoueur(): Boolean {
         if (gameOver()) {
             return false
@@ -66,11 +74,11 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
                 joueur.sacAItems.forEachIndexed { index, item ->
                     println("${item.nom} ($index)")
                 }
-                var indexChoix = readln().toIntOrNull()
+                val indexChoix = readln().toIntOrNull()
                 if (indexChoix != null) {
-                    var objetChoisi = joueur.sacAItems.getOrElse(indexChoix, { null })
+                    val objetChoisi = joueur.sacAItems.getOrElse(indexChoix, { null })
                     if (objetChoisi is Utilisable) {
-                        var captureReussie = objetChoisi.utiliser(monstreSauvage)
+                        val captureReussie = objetChoisi.utiliser(monstreSauvage)
                         if (captureReussie) {
                             return false
                         }
@@ -91,9 +99,8 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
                         }
                     }
 
-                    var indexChoix = readln().toIntOrNull() ?: 0
-                    var choixMonstre =
-                        joueur.equipeMonstre.getOrElse(indexChoix, { joueur.equipeMonstre.get(dernierMonstre) })
+                    val indexChoix = readln().toIntOrNull() ?: 0
+                    val choixMonstre = joueur.equipeMonstre.getOrElse(indexChoix, { joueur.equipeMonstre.get(dernierMonstre) })
                     if (choixMonstre.pv <= 0) {
                         println("Impossible ! Ce monstre est Ko")
                     } else {
@@ -112,7 +119,9 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
 
     }
 
-    //TODO Commentaires
+    /**
+     * affiche les données des deux [IndividuMonstre] et leurs ASCII arts.
+     */
     fun afficheCombat() {
         println("== Début Round: $round ==")
         println("Niveau : ${monstreSauvage.niveau}")
@@ -123,7 +132,9 @@ class CombatMonstre(var monstreJoueur: IndividuMonstre, var monstreSauvage: Indi
         println("PV: ${monstreJoueur.pv}/${monstreJoueur.pvMax}")
     }
 
-    //TODO Commentaires
+    /**
+     * Permet de choisit qui commence en premier.
+     */
     fun jouer() {
         val joueurPlusRapide = (monstreJoueur.vitesse >= monstreSauvage.vitesse)
         afficheCombat()

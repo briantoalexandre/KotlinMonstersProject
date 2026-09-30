@@ -16,12 +16,12 @@ import kotlin.random.Random
  */
 class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMonstre, var entraineur: Entraineur?, expInit: Double) {
     var niveau: Int = 1
-    var attaque: Int = especeMonstre.baseAttaque + (if (Random.nextInt(0, 2)==1) -2 else 2)
-    var defense: Int = especeMonstre.baseDefense + (if (Random.nextInt(0, 2)==1) -2 else 2)
-    var vitesse: Int = especeMonstre.baseVitesse + (if (Random.nextInt(0, 2)==1) -2 else 2)
-    var attaqueSpe: Int = especeMonstre.baseAttaqueSpe + (if (Random.nextInt(0, 2)==1) -2 else 2)
-    var defenseSpe: Int = especeMonstre.baseDefenseSpe + (if (Random.nextInt(0, 2)==1) -2 else 2)
-    var pvMax : Int = especeMonstre.basePv + (if (Random.nextInt(0, 2)==1) -5 else 5)
+    var attaque: Int = especeMonstre.baseAttaque + (if (Random.nextBoolean()) -2 else 2)
+    var defense: Int = especeMonstre.baseDefense + (if (Random.nextBoolean()) -2 else 2)
+    var vitesse: Int = especeMonstre.baseVitesse + (if (Random.nextBoolean()) -2 else 2)
+    var attaqueSpe: Int = especeMonstre.baseAttaqueSpe + (if (Random.nextBoolean()) -2 else 2)
+    var defenseSpe: Int = especeMonstre.baseDefenseSpe + (if (Random.nextBoolean()) -2 else 2)
+    var pvMax : Int = especeMonstre.basePv + (if (Random.nextBoolean()) -5 else 5)
     var potentiel: Double = (Random.nextInt(5, 21) / 10).toDouble()
     var exp: Double = 0.0
         //get() = field
@@ -65,12 +65,12 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
      */
     fun levelUp() {
         this.niveau++
-        this.attaque += (especeMonstre.modAttaque * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -2 else 2
-        this.defense += (especeMonstre.modDefense * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -2 else 2
-        this.vitesse += (especeMonstre.modVitesse * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -2 else 2
-        this.attaqueSpe += (especeMonstre.modAttaqueSpe * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -2 else 2
-        this.defenseSpe += (especeMonstre.modDefenseSpe * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -2 else 2
-        this.pvMax += (especeMonstre.modPv * potentiel).roundToInt() + if (Random.nextInt(0, 2)==0) -5 else 5
+        this.attaque += (especeMonstre.modAttaque * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
+        this.defense += (especeMonstre.modDefense * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
+        this.vitesse += (especeMonstre.modVitesse * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
+        this.attaqueSpe += (especeMonstre.modAttaqueSpe * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
+        this.defenseSpe += (especeMonstre.modDefenseSpe * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
+        this.pvMax += (especeMonstre.modPv * potentiel).roundToInt() + if (Random.nextBoolean()) -5 else 5
         this.pv = this.pvMax
     }
     /**
@@ -144,5 +144,6 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
 
     init {
         this.exp = expInit
+
     }
 }

@@ -8,8 +8,11 @@ import kotlin.random.Random
 //val magicFormula = {x:Double -> ((x-1.0)/(0.0-1.0))*(1.5-0.5)}
 
 class MonsterKube(id: Int, nom: String, description: String, var chanceCapture: Double): Item(id, nom, description), Utilisable {
+    /**
+     *
+     */
     override fun utiliser(cible: IndividuMonstre): Boolean {
-        println("Vous lancez la poké- le Monster Kube!")
+        println("Vous lancez${if (Random.nextBoolean()) " la poké-" else ""} le Monster Kube!")
         if (cible.entraineur != null) {
             println("Le monstre ne peut être capturé.")
         }

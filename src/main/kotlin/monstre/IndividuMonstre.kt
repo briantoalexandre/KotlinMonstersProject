@@ -5,6 +5,20 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
+
+//https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf partie 5.4 "Control Sequences"
+
+val ansiRegex = Regex("\u001B\\[[;\\d]*m")
+
+/**
+ * Compte que les caractères échappés
+ * ex:\u001B[32m
+ */
+fun String.visibleLength(): Int =
+    ansiRegex
+        .findAll(this)
+        .sumOf { it.value.length }
+
 /**
  * Représente un individu d'une espèce de monstre, associé à un entraîneur.
  *
@@ -112,7 +126,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
     fun afficherDetail() {
         val art: String = this.especeMonstre.afficheArt()
         var artLines: List<String> = art.lines()
-        var temp: Map<String, Any> = mapOf("" to "", "nom" to this.nom, "niveau" to this.niveau, "PV" to "${this.pv}/${this.pvMax}", "attaque" to this.attaque, "defense" to this.defense, "vitesse" to this.vitesse, "attaqueSpe" to this.attaqueSpe, "defenseSpe" to this.defenseSpe)
+        var temp: Map<String, Any> = mapOf("nom" to this.nom, "niveau" to this.niveau, "PV" to "${this.pv}/${this.pvMax}", "attaque" to this.attaque, "defense" to this.defense, "vitesse" to this.vitesse, "attaqueSpe" to this.attaqueSpe, "defenseSpe" to this.defenseSpe)
         var details: MutableList<String> = mutableListOf()
 
         temp.forEach { K, V ->
@@ -124,6 +138,8 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
 
         var artLine: String
         var detailLine: String
+
+        var calcul: Int
         for (i in 0..maxLines-1) {
             if (i < artLines.size) {
                 artLine = artLines[i]
@@ -135,7 +151,8 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
             } else {
                 detailLine = ""
             }
-            println(artLine.padEnd(maxArtWidth + 4) + detailLine)
+            calcul = maxArtWidth + 4 + if (i==0) artLine.visibleLength() else 0
+            println(artLine.padEnd(calcul) + detailLine)
             if (i < maxLines) {
                 continue
             }

@@ -26,7 +26,7 @@ import java.io.File
  * @param caracteres Caractères ou traits distinctifs de la créature.
  */
 
-class EspeceMonstre(var id : Int,var nom: String,var type: String,val baseAttaque: Int,val baseDefense: Int,val baseVitesse: Int,val baseAttaqueSpe: Int,val baseDefenseSpe: Int,val basePv: Int,val modAttaque: Double,val modDefense: Double,val modVitesse: Double,val modAttaqueSpe: Double,val modDefenseSpe: Double,val modPv: Double,val description: String = "",val particularites: String = "",val caracteres: String = "") {
+class EspeceMonstre(var id : Int,var nom: String,var type: String,val baseAttaque: Int,val baseDefense: Int,val baseVitesse: Int,val baseAttaqueSpe: Int,val baseDefenseSpe: Int,val basePv: Int,val modAttaque: Double,val modDefense: Double,val modVitesse: Double,val modAttaqueSpe: Double,val modDefenseSpe: Double,val modPv: Double,val description: String = "",val particularites: String = "",val caracteres: String = "", var palierEvolution: PalierEvolution = PalierEvolution(0, 0)) {
     /**
      * Affiche la représentation artistique ASCII du monstre.
      *

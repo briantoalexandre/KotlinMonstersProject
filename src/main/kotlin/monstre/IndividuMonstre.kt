@@ -50,7 +50,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
             while (field >= this.palierExp(this.niveau)) {
                 this.levelUp()
                 if (estNiveau1 == false) {
-                    println("Le monster ${this.nom} est maintenant niveau ${this.niveau}")
+                    println("Le monstre ${this.nom} est maintenant niveau ${this.niveau}")
                 }
             }
         }
@@ -76,6 +76,12 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
      * Augmente le niveau du monstre et incrémente ses caractéristiques par de nouvelles valeurs.
      */
     fun levelUp() {
+        val evolution = this.especeMonstre.palierEvolution.evolution
+        if (evolution != null) {
+            if (this.especeMonstre.palierEvolution.peutEvoluer(this)) {
+                evoluer(evolution)
+            }
+        }
         this.niveau++
         this.attaque += (especeMonstre.modAttaque * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
         this.defense += (especeMonstre.modDefense * potentiel).roundToInt() + if (Random.nextBoolean()) -2 else 2
@@ -85,6 +91,13 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
         this.pvMax += (especeMonstre.modPv * potentiel).roundToInt() + if (Random.nextBoolean()) -5 else 5
         this.pv = this.pvMax
     }
+
+    //TODO commentaires
+    fun evoluer(evolution: EspeceMonstre) {
+        println("${this.nom} évolue en ${evolution.nom}")
+        this.especeMonstre = evolution
+    }
+
     /**
     * Attaque un autre [IndividuMonstre] et inflige des dégâts. Fait par Alexandre
     *

@@ -15,9 +15,7 @@ val ansiRegex = Regex("\u001B\\[[;\\d]*m")
  * ex:\u001B[32m
  */
 fun String.visibleLength(): Int =
-    ansiRegex
-        .findAll(this)
-        .sumOf { it.value.length }
+    ansiRegex.findAll(this).sumOf { it.value.length }
 
 /**
  * Représente un individu d'une espèce de monstre, associé à un entraîneur.
@@ -151,7 +149,7 @@ class IndividuMonstre(var id: Int, var nom: String, var especeMonstre: EspeceMon
             } else {
                 detailLine = ""
             }
-            calcul = maxArtWidth + 4 + if (i==0) artLine.visibleLength() else 0
+            calcul = maxArtWidth + 4 + artLine.visibleLength()
             println(artLine.padEnd(calcul) + detailLine)
             if (i < maxLines) {
                 continue
